@@ -29,4 +29,3 @@
     "ANDROID_SDK_ROOT": "/opt/android-sdk",
     "PATH": "${PATH}:/opt/android-sdk/platform-tools:/opt/android-sdk/cmdline-tools/latest/bin"
   }
-}
