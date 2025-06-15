@@ -1,0 +1,25 @@
+FROM mcr.microsoft.com/devcontainers/base:ubuntu-22.04
+
+# Install dependencies
+RUN apt-get update -y && \
+    apt-get install -y \
+    curl \
+    unzip \
+    wget \
+    openjdk-17-jdk \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install Android SDK
+ENV ANDROID_HOME /opt/android-sdk
+ENV ANDROID_SDK_ROOT /opt/android-sdk
+RUN mkdir -p ${ANDROID_HOME}/cmdline-tools && \
+    wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O /tmp/cmdline-tools.zip && \
+    unzip /tmp/cmdline-tools.zip -d ${ANDROID_HOME}/cmdline-tools && \
+    mv ${ANDROID_HOME}/cmdline-tools/cmdline-tools ${ANDROID_HOME}/cmdline-tools/latest && \
+    rm /tmp/cmdline-tools.zip
+
+# Set PATH for Android tools
+ENV PATH ${PATH}:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/cmdline-tools/latest/bin
+
+# Accept Android SDK licenses
+RUN yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --licenses

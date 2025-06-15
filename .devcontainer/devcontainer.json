@@ -1,0 +1,29 @@
+{
+  "name": "Android Development Environment",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "redhat.java",
+        "vscjava.vscode-gradle",
+        "ms-vscode.vscode-typescript-tslint-plugin"
+      ]
+    }
+  },
+  "postCreateCommand": "bash -c 'sdkmanager --install \"platforms;android-35\" \"build-tools;35.0.0\" \"platform-tools\" \"emulator\" && sdkmanager --licenses'",
+  "runArgs": ["--memory", "8gb"],
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "17",
+      "installGradle": true
+    }
+  },
+  "containerEnv": {
+    "ANDROID_HOME": "/opt/android-sdk",
+    "ANDROID_SDK_ROOT": "/opt/android-sdk",
+    "PATH": "${PATH}:/opt/android-sdk/platform-tools:/opt/android-sdk/cmdline-tools/latest/bin"
+  }
+}
